@@ -1,0 +1,29 @@
+#학생 2
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys 
+import time 
+
+driver = webdriver.Chrome('chromedriver.exe')
+driver.get('https://www.youtube.com/watch?v=YLznDhpZf-Q')
+
+time.sleep(3)
+
+e = driver.find_element_by_tag_name('body')
+for i in range(10):
+  e.send_keys(Keys.PAGE_DOWN)
+  time.sleep(1)
+
+users = []
+
+for i in range(100):
+  try : 
+    e = driver.find_elements_by_css_selector('h3.ytd-comment-renderer a span')[i].text
+    print(e)
+    users.append(e)
+  except : 
+    pass
+print(e)
+
+with open('names.csv', 'w', encoding='utf-8') as f:
+  for i in users:
+    f.write(i + '\n')
