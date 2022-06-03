@@ -1,3 +1,4 @@
+#학생 1 ('유튜브' 사이트에서 검색한 '자이언트펭TV' 채널에 있는 영상들을 차례대로 나타내고 조회수를 나타내는 크롤러를 코딩)
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -64,3 +65,34 @@ def get_image_title(url):
 
 url1 = 'https://www.youtube.com/channel/UCtckgmUcpzqGnzcs7xEqMzQ/videos'
 image1, view1, period1, title1 = get_image_title(url1)
+
+#학생2('유튜브'사이트 내 '자이언트펭TV'채널의 동영상 속 댓글 작성자 크롤링)
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys 
+import time 
+
+driver = webdriver.Chrome('chromedriver.exe')
+driver.get('https://www.youtube.com/watch?v=YLznDhpZf-Q')
+
+time.sleep(3)
+
+e = driver.find_element_by_tag_name('body')
+for i in range(10):
+  e.send_keys(Keys.PAGE_DOWN)
+  time.sleep(1)
+
+users = []
+
+for i in range(100):
+  try : 
+    e = driver.find_elements_by_css_selector('h3.ytd-comment-renderer a span')[i].text
+    print(e)
+    users.append(e)
+  except : 
+    pass
+print(e)
+
+with open('names.csv', 'w', encoding='utf-8') as f:
+  for i in users:
+    f.write(i + '\n')
+
